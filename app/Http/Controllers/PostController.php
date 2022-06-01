@@ -9,6 +9,7 @@ class PostController extends Controller
 {
     public function index(){
         $posts = Post::all();
+//        return $posts;
         return view('index',compact('posts'));
     }
 
@@ -23,6 +24,32 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->save();
 
-        return redirect()->route('post.index');
+        return redirect()->route('post.index')->with("status","Post is created");
+    }
+
+    public function show($id){
+        $post = Post::find($id);
+        return view('show',compact('post'));
+    }
+
+    public function destroy($id){
+        $post = Post::find($id);
+        $post->delete();
+        return redirect()->route('post.index')->with('status','post deleted');
+    }
+
+    public function edit($id){
+        $post = Post::find($id);
+//        return $post;
+        return view('edit',compact('post'));
+    }
+
+    public function update(Request $request,$id){
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->update();
+
+        return redirect()->route('post.index')->with('status','Post is updated');
     }
 }
