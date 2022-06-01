@@ -18,6 +18,15 @@
                         </div>
                     </div>
                 </div>
+
+                @foreach($posts as $post)
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">{{ $post->title }}</h4>
+                            <p class="card-text text-black-50">{{ Str::words($post->description,50) }}</p>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
