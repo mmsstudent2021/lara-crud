@@ -16,20 +16,35 @@
                             </div>
                         </div>
 
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class=" mb-0">
+                                    @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form action="{{ route('post.store') }}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="" class="form-label">Post Title</label>
-                                <input type="text" class="form-control form-control-lg" name="title">
+                                <input type="text" value="{{ old('title') }}" class="form-control form-control-lg @error('title') is-invalid @enderror" name="title">
+                                @error("title")
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="" class="form-label">Post Title</label>
-                                <textarea type="text" rows="10" class="form-control form-control-lg" name="description"></textarea>
+                                <label for="" class="form-label">Post Description</label>
+                                <textarea type="text" rows="10" class="form-control form-control-lg @error('description') is-invalid @enderror" name="description">{{ old('description') }}</textarea>
+                                @error("description")
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="text-center">
                                 <button class="btn btn-primary btn-lg">Add Post</button>
                             </div>
-
                         </form>
                     </div>
                 </div>
